@@ -1,0 +1,64 @@
+appId: com.electron.app
+productName: electron-app
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+asarUnpack:
+  - resources/**
+win:
+  executableName: electron-app
+nsis:
+  # 安装包名称
+  artifactName: ${name}-${version}-setup.${ext}
+  # 安装图标
+  # installerIcon: "build/icon.png",
+  # 卸载图标
+  # uninstallerIcon: "build/icon.png",
+  # 安装时头部图标
+  # installerHeaderIcon: "build/icon.png",
+  # true: 一键安装 false: 辅助安装
+  oneClick: false
+  # false: 可选择为所有人或当前用户安装 true: 为所有人安装
+  perMachine: true
+  # 是否允许请求提升（仅辅助安装程序）
+  allowElevation: true
+  # 是否允许用户修改安装目录
+  allowToChangeInstallationDirectory: true
+  # 是否创建桌面快捷方式
+  createDesktopShortcut: always
+  # 是否创建开始菜单快捷方式
+  createStartMenuShortcut: true
+  # 定制安装程序脚本的路径
+  # include: './installer.nsh'
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - snap
+    - deb
+  maintainer: electronjs.org
+  category: Utility
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: generic
+  url: https://example.com/auto-updates
+electronDownload:
+  mirror: https://npmmirror.com/mirrors/electron/
